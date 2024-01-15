@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h4>{{user.username}}</h4>
+<!-- usage of the () parentheses. In Django templates, method calls are not allowed -->
+<p>{{user.get_role}}</p>
+{% include 'includes/alerts.html' %}
+
+{% endblock %}

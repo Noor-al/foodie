@@ -2,13 +2,31 @@ from django.shortcuts import redirect, render
 from .forms import UserForm
 from vendor.forms import VendorForm
 from .models import User, UserProfile
-from django.contrib import messages
+from django.contrib import messages, auth
+from . import utils
+from django.contrib.auth.decorators import login_required, user_passes_test
 
+from django.core.exceptions import PermissionDenied
 
-# Create your views here.
+# Restruct the vendor from accessing the customer page
+def check_role_vendor(user):
+    if user.role == 1:
+        return True
+    else:
+        raise PermissionDenied
+    
+# Restruct the customer from accessing the vendor page
+def check_role_customer(user):
+    if user.role == 2 :
+        return True
+    else:
+        raise PermissionDenied
 
 def registerUser(request):
-    if request.method == 'POST':
+    if request.user.is_authenticated:
+        messages.warning(request, 'you are already logged in')
+        return redirect('myAccount')
+    elif request.method == 'POST':
         form = UserForm(request.POST)
         #this form gets automatically be validated using the is_valid() function that we have here
         # it is responsible for giving us all these kinds of field errors.
@@ -42,7 +60,10 @@ def registerUser(request):
 
 
 def registerVendor(request):
-    if request.method == 'POST':
+    if request.user.is_authenticated:
+        messages.warning(request, 'you are already logged in')
+        return redirect('myAccount') 
+    elif request.method == 'POST':
         form = UserForm(request.POST)
         v_form = VendorForm(request.POST, request.FILES)
         if form.is_valid() and v_form.is_valid():
@@ -75,3 +96,45 @@ def registerVendor(request):
 
     return render(request, 'accounts/registerVendor.html', context)
 
+
+def login(request):
+    if request.user.is_authenticated:
+        messages.warning(request, 'you are already logged in')
+        return redirect('myAccount')
+    elif request.method == "POST":
+        email = request.POST['email'] # post['email'] email:name of the field in the html
+        password = request.POST['password']
+
+        user = auth.authenticate(email=email, password=password)
+
+        if user is not None:
+            auth.login(request, user) #login() is an auth function (built in)
+            messages.success(request, 'you are logged in')
+            return redirect('myAccount')
+        else:
+            messages.error(request, 'invalid user')
+            return redirect('login')
+
+    return render(request, 'accounts/login.html')
+
+def logout(request):
+    auth.logout(request)
+    messages.info(request, 'you are loged out')
+    return redirect('login')
+
+@login_required(login_url='login') #send the user to login page when he's not logged in
+def myAccount(request):
+    user = request.user
+    redirecturl = utils.detectUser(user)
+    return redirect(redirecturl)
+
+
+@login_required(login_url='login')
+@user_passes_test(check_role_vendor)
+def venDashboard(request):
+    return render(request, 'accounts/venDashboard.html')
+
+@login_required(login_url='login')
+@user_passes_test(check_role_customer)
+def custDashboard(request):
+    return render(request, 'accounts/custDashboard.html') 
