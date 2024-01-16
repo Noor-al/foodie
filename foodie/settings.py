@@ -144,3 +144,20 @@ from django.contrib.messages import constants as messages
 MESSAGE_TAGS = {
     messages.ERROR: "danger",
 }
+
+
+# # email configuration
+# EMAIL_HOST = config('EMAIL_HOST')
+# EMAIL_PORT = config('EMAIL_PORT', cast=int) #we need to specify the cast for integers
+# EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+# EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+
+
+
+EMAIL_HOST= 'smtp.gmail.com'
+EMAIL_PORT= 587
+EMAIL_HOST_USER=''  #actual password is '1234@foodie'
+# According to Google's new sign-in policy, you need to create App Password to send emails from your application
+EMAIL_HOST_PASSWORD= ''
+EMAIL_USE_TLS = True #to ensure email sends securely
+DEFAULT_FROM_EMAIL = 'Foodonline marketplace <foodie.django@gmail.com'

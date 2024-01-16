@@ -1,0 +1,12 @@
+<!-- So this auto escape off simply means that we trust the values from where they are coming.
+This also means that you are safe against the cross-site scripting.
+Otherwise, it's a security hole. -->
+
+{% autoescape off %}
+
+hi {{user.first_name}}
+
+Please click on the linke to confirm your registration.
+http://{{domain}}{% url 'activate' uidb64=uid token=token %}
+
+{% endautoescape %}
