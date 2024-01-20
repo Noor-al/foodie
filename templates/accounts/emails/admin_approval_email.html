@@ -1,0 +1,11 @@
+{% autoescape off %}
+
+Hi {{user.first_name}}
+
+{% if is_approved %}
+Congratulation!! your resturant has been approved by our team
+{% else %}
+We are sorry! you are no eligiable to publish on FOODIE. for more information you can contact our team via support@foodie.com
+{% endif %}
+
+{% endautoescape %}

@@ -4,7 +4,7 @@ Otherwise, it's a security hole. -->
 
 {% autoescape off %}
 
-hi {{user.first_name}}
+Hi {{user.first_name}}
 
 Please click on the linke to confirm your registration.
 http://{{domain}}{% url 'activate' uidb64=uid token=token %}

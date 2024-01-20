@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.http import urlsafe_base64_decode
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.tokens import default_token_generator
+from vendor.models import Vendor
 
 # Restruct the vendor from accessing the customer page
 def check_role_vendor(user):
@@ -158,6 +159,7 @@ def myAccount(request):
     return redirect(redirecturl)
 
 
+
 @login_required(login_url='login')
 @user_passes_test(check_role_vendor)
 def venDashboard(request):
@@ -167,6 +169,7 @@ def venDashboard(request):
 @user_passes_test(check_role_customer)
 def custDashboard(request):
     return render(request, 'accounts/custDashboard.html') 
+
 
 
 def forgot_password(request):
@@ -197,6 +200,7 @@ def reset_password_validate(request, uidb64, token):
     except(TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
 
+    # This method checks if a given token is valid for a specific user. default_token_generator.check_token(user, token)
     if user is not None and default_token_generator.check_token(user, token):
         request.session['uid'] = uid #we are storing this at the session, we will need the primary key to reset the password.
         messages.info(request, 'Please reset your password')

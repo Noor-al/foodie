@@ -66,6 +66,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'accounts.context_proccessors.get_vendor'
             ],
         },
     },
@@ -160,4 +161,4 @@ EMAIL_HOST_USER=''  #actual password is '1234@foodie'
 # According to Google's new sign-in policy, you need to create App Password to send emails from your application
 EMAIL_HOST_PASSWORD= ''
 EMAIL_USE_TLS = True #to ensure email sends securely
-DEFAULT_FROM_EMAIL = 'Foodonline marketplace <foodie.django@gmail.com'
+DEFAULT_FROM_EMAIL = ''
