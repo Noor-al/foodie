@@ -66,7 +66,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'accounts.context_proccessors.get_vendor'
+                'accounts.context_proccessors.get_vendor',
+                'accounts.context_proccessors.get_google_api',
             ],
         },
     },
@@ -162,3 +163,5 @@ EMAIL_HOST_USER=''  #actual password is '1234@foodie'
 EMAIL_HOST_PASSWORD= ''
 EMAIL_USE_TLS = True #to ensure email sends securely
 DEFAULT_FROM_EMAIL = ''
+
+GOOGLE_API_KEY = ''
