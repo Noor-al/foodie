@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts',
     'vendor',
+    'menu',
 ]
 
 MIDDLEWARE = [
@@ -158,10 +159,3 @@ MESSAGE_TAGS = {
 
 EMAIL_HOST= 'smtp.gmail.com'
 EMAIL_PORT= 587
-EMAIL_HOST_USER=''  #actual password is '1234@foodie'
-# According to Google's new sign-in policy, you need to create App Password to send emails from your application
-EMAIL_HOST_PASSWORD= ''
-EMAIL_USE_TLS = True #to ensure email sends securely
-DEFAULT_FROM_EMAIL = ''
-
-GOOGLE_API_KEY = ''

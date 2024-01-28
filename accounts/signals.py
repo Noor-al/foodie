@@ -13,7 +13,7 @@ def post_save_create_profile_receiver(sender, instance, created, **kwargs):
             profile = UserProfile.objects.get(user=instance)
             profile.save()
         except:
-            # incase we are updating the user but there was no profile for the user
+            # in case we are updating the user but there was no profile for the user
             UserProfile.objects.create(user=instance)
 
 

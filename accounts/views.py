@@ -56,7 +56,7 @@ def registerUser(request):
             send_verification_email(request, user, mail_subject, email_template)
             messages.success(request, 'account registered successfully')
 
-            return redirect('registerUser')
+            return redirect('login')
   
     else:
         form = UserForm()
@@ -85,7 +85,10 @@ def registerVendor(request):
             user.save()
             vendor = v_form.save(commit=False)
             vendor.user = user
-            vendor.userProfile = UserProfile.objects.get(user=user) # get the userprofile from user
+            user_profile = UserProfile.objects.get(user=user)
+            # print('heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeere')
+            # print(user_profile)
+            vendor.user_profile = user_profile # get the userprofile from user
             vendor.save()
 
             # send verification email
